@@ -32,9 +32,9 @@ jobs:
       - name: Sync with upstream
         run: |
           # 尝试合并上游变更
-          if git merge upstream/main --no-edit; then
+          if git merge upstream/master --no-edit; then
             echo "合并成功，推送变更"
-            git push origin main
+            git push origin master
           else
             echo "检测到冲突，创建PR"
             git checkout -b "sync-$(date +%s)"
@@ -43,7 +43,7 @@ jobs:
             gh pr create \
               --title "上游同步: $(date +'%Y-%m-%d')" \
               --body "自动解决同步冲突" \
-              --base main \
+              --base master \
               --head $(git branch --show-current)
           fi
         env:
